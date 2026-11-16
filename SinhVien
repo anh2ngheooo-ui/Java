@@ -1,0 +1,127 @@
+package NgocSonn;
+
+import java.util.Scanner;
+
+class SinhVien{
+    //thuoc tinh
+    String MaSV;
+    String HoTen;
+    double DiemTB;
+    
+    // phuong thuc khoi tao
+    public SinhVien(){}
+    public SinhVien( String  MaSV, String HoTen, double DiemTB ){
+        this.MaSV = MaSV;
+        this.HoTen = HoTen;
+        this.DiemTB = DiemTB;
+    }
+    
+    // phuong thuc nhap
+    public void nhap(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap ma sinh vien: ");
+        this.MaSV = sc.nextLine();
+        System.out.println("Nhap ho ten: ");
+        this.HoTen = sc.nextLine();
+        System.out.println("Nhap diem TB: ");
+        this.DiemTB = sc.nextDouble();
+        
+    }
+    // pthuc xuat
+    public void xuat(){
+        System.out.println("Ma SV: " + this.MaSV );
+        System.out.println("Ho ten: " + this.HoTen );
+        System.out.println("Diem TB: " + this.DiemTB );     
+    }
+    
+    public double LayDiemTB(){
+        return DiemTB;
+}
+}
+    
+    class SinhVienCD extends SinhVien{  // kế thừa đơn
+        // thuoc tinh
+        String NganhHoc;
+        int SoTinChi;
+        float HocPhiMotTinChi;
+        
+        // khoi tao 
+        public SinhVienCD(){}
+        public SinhVienCD( String  MaSV, String HoTen, double DiemTB, String NganhHoc, int SoTinChi, float HocPhiMotTinChi ){
+            
+            // gọi pt khởi tạo lớp cơ sở => kế thừa           
+            super(MaSV, HoTen, DiemTB );
+            this.NganhHoc = NganhHoc;
+            this.SoTinChi = SoTinChi;
+            this.HocPhiMotTinChi = HocPhiMotTinChi;
+              
+        }
+        
+        // nhap
+        @Override
+        public void nhap(){
+            super.nhap();
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Nhap nganh hoc: ");
+            this.NganhHoc = sc.nextLine();
+            System.out.println("Nhap so tin chi: ");
+            this.SoTinChi = sc.nextInt();
+            System.out.println("Nhap hoc phi mot tin chi: ");
+            this.HocPhiMotTinChi = sc.nextFloat();     
+        }
+        // pt xuat
+        @Override
+        public void xuat(){
+            // gọi pt cua lớp cơ sở => kế thừa
+            super.xuat();
+            System.out.println("Nganh hoc: " + this.NganhHoc );
+            System.out.println("Tin chi: " + this.SoTinChi );
+            System.out.println("Hoc phi mot tin chi: " + this.HocPhiMotTinChi );
+            System.out.println("Hoc phi: " + this.TinhHocPhi());
+        }
+        // pt tinh hoc phí
+        public float TinhHocPhi(){
+            return this.SoTinChi* this.HocPhiMotTinChi; 
+        }
+    }
+
+public class NgocSonn{
+    public static  void main(String[] args){
+        
+        // nhap xuat 1 doi tuong
+        SinhVien sv = new SinhVien();
+        sv.nhap();
+        sv.xuat();
+        
+        
+        // nhap xuat n doi tuong
+        int n;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap n sinh vien: ");
+        n = sc.nextInt();
+        
+        System.out.println("------------------------------------------------");
+        
+        SinhVienCD[] cd = new SinhVienCD[n];
+        for( int i = 0; i < n; i ++ ){
+            System.out.println("Sinh vien thu " + ( i + 1 ) + " la: ");
+            cd[i] = new SinhVienCD();
+            cd[i].nhap();
+        }
+        
+        for( int i = 0; i < n; i ++ ){
+            System.out.println("------------------------------------------------");
+            System.out.println("Sinh vien thu " + ( i + 1 ) + " la: ");
+            cd[i].xuat();
+        
+        }     
+        System.out.println("------------------------------------------------");
+        System.out.println("Sinh vien co hoc phi cao nhat la: ");
+        SinhVienCD max = cd[0];
+        for( int i = 1; i < n; i ++ ){
+            if( cd[i].TinhHocPhi() > max.TinhHocPhi() )
+                max = cd[i];
+        }
+        max.xuat();
+    }
+}
